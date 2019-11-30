@@ -3,13 +3,41 @@ function createElement(type, props, ...children) {
         type,
         props: {
             ...props,
-            children,
+            children: children.map(child =>
+                typeof child === "object"
+                ? child
+                : createTextElement(child)
+            ),
         },
     }
 }
 
-var a = createElement("div");
-var b = createElement("div");
-console.log(createElement("div"));
-console.log(createElement("div", null, a));
-console.log(createElement("div", null, a, b));
+function createTextElement(text) {
+    return {
+        type: "TEXT_ELEMENT",
+        props: {
+            nodeValue: text,
+            children: [],
+        },
+    }
+}
+
+const Didact = {
+    createElement,
+}
+
+const element = Didact.createElement(
+    "div",
+    { id: "foo" },
+    Didact.createElement("a", null, "bar"),
+    Didact.createElement("b")
+)
+console.log(element);
+
+/** @jsx Didact.createElement */
+// const element = (
+//     <div id="foo">
+//         <a>bar</a>
+//         <b />
+//     </div>
+// )
