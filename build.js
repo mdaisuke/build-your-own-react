@@ -33,15 +33,26 @@ function createTextElement(text) {
   };
 }
 
-var Didact = {
-  createElement: createElement
-}; // const element = Didact.createElement(
-//     "div",
-//     { id: "foo" },
-//     Didact.createElement("a", null, "bar"),
-//     Didact.createElement("b")
-// )
+function render(element, container) {
+  var dom = element.type == "TEXT_ELEMENT" ? document.createTextNode("") : document.createElement(element.type);
 
+  var isProperty = function isProperty(key) {
+    return key !== "children";
+  };
+
+  Object.keys(element.props).filter(isProperty).forEach(function (name) {
+    dom[name] = element.props[name];
+  });
+  element.props.children.forEach(function (child) {
+    return render(child, dom);
+  });
+  container.appendChild(dom);
+}
+
+var Didact = {
+  createElement: createElement,
+  render: render
+};
 /** @jsx Didact.createElement */
 
 var element = Didact.createElement("div", {

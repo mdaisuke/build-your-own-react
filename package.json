@@ -4,6 +4,7 @@
   "description": "- [Build your own React](https://pomb.us/build-your-own-react/)",
   "main": "sample.js",
   "scripts": {
+    "build": "parcel index.html",
     "sample": "babel sample.js --out-file build.js && node build.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,6 +23,11 @@
     "@babel/core": "^7.7.4",
     "@babel/node": "^7.7.4",
     "@babel/plugin-transform-react-jsx": "^7.7.4",
-    "@babel/preset-env": "^7.7.4"
+    "@babel/preset-env": "^7.7.4",
+    "parcel": "^1.12.4"
+  },
+  "dependencies": {
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   }
 }
